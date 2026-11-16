@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QuantaGuard — PQ-Ready Smart Accounts for QMS</title>
+<style>
+  body{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#0b1020;color:#e6e9f2;margin:0;padding:24px}
+  .wrap{max-width:920px;margin:0 auto} h1{font-size:28px;margin:0 0 4px} .sub{color:#9aa4bf;margin:0 0 20px}
+  .card{background:#141a2e;border:1px solid #263052;border-radius:12px;padding:16px;margin:12px 0}
+  button{background:#4f6bff;color:#fff;border:0;border-radius:8px;padding:10px 14px;cursor:pointer;margin:4px 4px 4px 0}
+  button:disabled{opacity:.5} input{width:100%;box-sizing:border-box;padding:9px;border-radius:8px;border:1px solid #33406b;background:#0e1428;color:#e6e9f2;margin:4px 0 10px}
+  a{color:#8fb0ff} code{word-break:break-all;color:#bcd} .ok{color:#7ee2a0} .mono{font-family:ui-monospace,monospace;font-size:13px}
+  label{font-size:13px;color:#9aa4bf}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🛡️ QuantaGuard</h1>
+  <p class="sub">PQ-ready ERC-4337-style smart accounts + AI-agent session keys + a QUBO job board — live on <b>QMS Testnet (chainId 19480)</b>.</p>
+
+  <div class="card">
+    <button id="connect">Connect Wallet</button>
+    <button id="addnet">Add QMS Testnet</button>
+    <div id="status" class="mono">Not connected.</div>
+  </div>
+
+  <div class="card">
+    <h3>Deployed contracts</h3>
+    <div id="contracts" class="mono"></div>
+  </div>
+
+  <div class="card">
+    <h3>1 · Create account (CREATE2 via factory)</h3>
+    <label>Salt (bytes32)</label>
+    <input id="salt" value="0x0000000000000000000000000000000000000000000000000000000000000002">
+    <button id="btnCreate">Create my QuantaGuard account</button>
+    <div id="createOut" class="mono"></div>
+  </div>
+
+  <div class="card">
+    <h3>2 · Register PQ guardian commitment</h3>
+    <p class="mono">Anchors <code>keccak256(ML-DSA public key)</code> for your account in PQGuardianRegistry. On QMS v0.1 the guardian acts via ECDSA; PQ verification plugs in at v1 via <code>IPQVerifier</code>.</p>
+    <label>Account address</label><input id="acct">
+    <label>PQ commitment (bytes32)</label><input id="commit" value="0x3a4a8d1b8440e784f52a0aa64908483e8cc6bae4025f48871f805339dbc95193">
+    <label>Guardian address</label><input id="guardian">
+    <button id="btnGuardian">Register guardian (via account)</button>
+    <div id="guardianOut" class="mono"></div>
+  </div>
+
+  <div class="card">
+    <h3>3 · Post a QUBO job (portfolio example)</h3>
+    <label>Problem hash (bytes32) — demo 4-asset portfolio QUBO, see README</label>
+    <input id="problem" value="0x8484cf0eaeacb90944700075542cade1dff63328c51a49401681340a85c82f5b">
+    <label>Reward (QMS)</label><input id="reward" value="0.1">
+    <label>Duration (days)</label><input id="days" value="7">
+    <button id="btnJob">Post job</button>
+    <div id="jobOut" class="mono"></div>
+  </div>
+
+  <p class="sub mono">Demo job #1 is already live on the board (0.1 QMS locked). Testnet only — no real funds.</p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/ethers@6.13.4/dist/ethers.umd.min.js"></script>
+<script>
+// Inline copy of deployments/qms-testnet.json (so this file opens standalone via file://)
+const DEPLOY = {
+  chainId: 19480, rpc: "https://rpc.testnet.qms.finance", explorer: "https://testnet.qmsscan.io",
+  PQGuardianRegistry: "0x3F7548239BF586094E236357dFd41BFcB45a2480",
+  QuantaGuardFactory: "0x82AECF6465D12b5Fe56A4063ccBA0A6c1112d5e5",
+  QUBOJobBoard: "0xe6DbA5D0b3504Fc9c94CA4bB3d60Fe03c0F71C77",
+  demoAccount: "0xf14E3681b156dB426c05bC0168d39E753Ee1eBDD"
+};
+const FACTORY_ABI = ["function createAccount(address,bytes32) returns (address)", "function getAddress(address,bytes32) view returns (address)"];
+const ACCOUNT_ABI = ["function registerGuardian(bytes32,address)", "function owner() view returns (address)"];
+const BOARD_ABI = ["function postJob(bytes32,uint256) payable returns (uint256)", "function getJob(uint256) view returns (tuple(address,bytes32,uint256,uint256,uint8,address,int256,bytes32,uint256))"];
+let provider, signer;
+
+document.getElementById('contracts').innerHTML = Object.entries({
+  PQGuardianRegistry: DEPLOY.PQGuardianRegistry, QuantaGuardFactory: DEPLOY.QuantaGuardFactory,
+  QUBOJobBoard: DEPLOY.QUBOJobBoard, "Demo account": DEPLOY.demoAccount
+}).map(([k,v]) => `${k}: <a target="_blank" href="${DEPLOY.explorer}/address/${v}">${v}</a>`).join('<br>');
+document.getElementById('acct').value = DEPLOY.demoAccount;
+
+async function connect() {
+  if (!window.ethereum) { alert('No EVM wallet found. Install MetaMask.'); return; }
+  provider = new ethers.BrowserProvider(window.ethereum);
+  await provider.send('eth_requestAccounts', []);
+  signer = await provider.getSigner();
+  const net = await provider.getNetwork();
+  document.getElementById('status').innerHTML =
+    `Connected: <span class="ok">${await signer.getAddress()}</span> · chainId ${net.chainId}` +
+    (Number(net.chainId) !== DEPLOY.chainId ? ' — ⚠️ switch to QMS Testnet (button above)' : ' — ✅ QMS Testnet');
+  document.getElementById('guardian').value = await signer.getAddress();
+}
+document.getElementById('connect').onclick = connect;
+document.getElementById('addnet').onclick = async () => {
+  await window.ethereum.request({ method: 'wallet_addEthereumChain', params: [{
+    chainId: '0x4c18', chainName: 'QMS Testnet', rpcUrls: [DEPLOY.rpc],
+    blockExplorerUrls: [DEPLOY.explorer], nativeCurrency: { name: 'QMS', symbol: 'QMS', decimals: 18 }
+  }]});
+};
+async function needSigner() { if (!signer) await connect(); return signer; }
+
+document.getElementById('btnCreate').onclick = async () => {
+  const s = await needSigner(); const out = document.getElementById('createOut');
+  const f = new ethers.Contract(DEPLOY.QuantaGuardFactory, FACTORY_ABI, s);
+  const me = await s.getAddress(); const salt = document.getElementById('salt').value;
+  const predicted = await f.getAddress(me, salt); out.textContent = 'Predicted: ' + predicted + ' — sending…';
+  const tx = await f.createAccount(me, salt); await tx.wait();
+  out.innerHTML = `✅ Account <a target="_blank" href="${DEPLOY.explorer}/address/${predicted}">${predicted}</a> · tx <a target="_blank" href="${DEPLOY.explorer}/tx/${tx.hash}">${tx.hash}</a>`;
+  document.getElementById('acct').value = predicted;
+};
+document.getElementById('btnGuardian').onclick = async () => {
+  const s = await needSigner(); const out = document.getElementById('guardianOut');
+  const acct = new ethers.Contract(document.getElementById('acct').value, ACCOUNT_ABI, s);
+  const tx = await acct.registerGuardian(document.getElementById('commit').value, document.getElementById('guardian').value);
+  await tx.wait();
+  out.innerHTML = `✅ Guardian registered · tx <a target="_blank" href="${DEPLOY.explorer}/tx/${tx.hash}">${tx.hash}</a>`;
+};
+document.getElementById('btnJob').onclick = async () => {
+  const s = await needSigner(); const out = document.getElementById('jobOut');
+  const board = new ethers.Contract(DEPLOY.QUBOJobBoard, BOARD_ABI, s);
+  const deadline = Math.floor(Date.now()/1000) + Number(document.getElementById('days').value) * 86400;
+  const tx = await board.postJob(document.getElementById('problem').value, deadline,
+    { value: ethers.parseEther(document.getElementById('reward').value) });
+  await tx.wait();
+  out.innerHTML = `✅ Job posted · tx <a target="_blank" href="${DEPLOY.explorer}/tx/${tx.hash}">${tx.hash}</a>`;
+};
+</script>
+</body>
+</html>
