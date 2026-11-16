@@ -62,6 +62,27 @@ function hexToDecimalString(hex) {
   return whole.toString() + "." + fracStr;
 }
 
+/* ---------------- Theme toggle (dark / light, sun and moon icons) ---------------- */
+
+(function initTheme() {
+  const root = document.documentElement;
+  const btn = $("themeToggle");
+  function syncLabel() {
+    if (!btn) return;
+    const light = root.getAttribute("data-theme") === "light";
+    btn.setAttribute("aria-label", light ? "Switch to dark theme" : "Switch to light theme");
+  }
+  if (btn) {
+    btn.addEventListener("click", function () {
+      const next = root.getAttribute("data-theme") === "light" ? "dark" : "light";
+      root.setAttribute("data-theme", next);
+      try { localStorage.setItem("quantaguard-theme", next); } catch (e) { /* storage unavailable */ }
+      syncLabel();
+    });
+  }
+  syncLabel();
+})();
+
 /* ---------------- Ticker: duplicate content for a seamless loop ---------------- */
 
 (function initTicker() {
@@ -221,6 +242,13 @@ document.querySelectorAll(".copy-btn").forEach(function (btn) {
   let commitment = null;
   let registered = false;
 
+  input.addEventListener("input", function () {
+    commitment = null;
+    registered = false;
+    registerBtn.disabled = true;
+    recoverBtn.disabled = true;
+  });
+
   async function sha256Hex(text) {
     const data = new TextEncoder().encode(text);
     const digest = await crypto.subtle.digest("SHA-256", data);
@@ -290,6 +318,10 @@ document.querySelectorAll(".copy-btn").forEach(function (btn) {
     const allowedTarget = $("skTarget").value;
     const actionTarget = $("skActionTarget").value;
 
+    if (amount < 0) {
+      render("<p><span class='verdict blocked'>BLOCKED: invalid amount.</span> The test action amount cannot be negative.</p>");
+      return;
+    }
     if (elapsed > expiryHours) {
       render("<p><span class='verdict blocked'>BLOCKED: key expired.</span> Simulated time is " + elapsed + "h, the key expires at " + expiryHours + "h. On chain this call reverts.</p>");
       return;

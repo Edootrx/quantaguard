@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>try{var t=localStorage.getItem("quantaguard-theme");if(t==="light"||t==="dark"){document.documentElement.setAttribute("data-theme",t);}}catch(e){}</script>
 <title>QuantaGuard: PQ-Ready Smart Wallet for QMS</title>
 <meta name="description" content="PQ-ready ERC-4337 smart wallet for QMS: guardian recovery anchored to post-quantum keys, AI-agent session keys, and QUBO optimisation jobs. Live on QMS Testnet, chain 19480.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -48,6 +49,10 @@
       <span class="wallet-chip" id="navWalletChip" hidden>
         <span class="chip-dot"></span><span id="navWalletAddr">0x0000...0000</span>
       </span>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to light theme" title="Toggle theme">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+      </button>
       <button class="btn btn-primary btn-sm magnetic" type="button" data-connect-open>Connect Wallet</button>
       <button class="hamburger" id="hamburger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
@@ -62,7 +67,6 @@
     <a href="#demos" data-spy-link>Live Demos<span>Try the mechanics in your browser</span></a>
     <a href="#roadmap" data-spy-link>Roadmap<span>Honest staging: v0.1, v1, v2</span></a>
     <a href="#plan" data-spy-link>90-Day Plan<span>What ships in the cohort</span></a>
-    <button class="btn btn-primary" type="button" data-connect-open>Connect Wallet</button>
   </nav>
 </header>
 
@@ -85,9 +89,8 @@
       <h1 class="reveal-text" id="heroTitle">PQ-ready ERC-4337 smart wallet for QMS: guardian recovery anchored to <span class="shiny">post-quantum keys</span>, AI-agent session keys, and QUBO optimisation jobs.</h1>
       <p class="hero-sub">QuantaGuard is a smart-account wallet for QMS users and their AI agents. It is not a slide deck: three contracts are deployed on QMS Testnet today, with live demo transactions anyone can verify on QMSScan.</p>
       <div class="hero-actions">
-        <button class="btn btn-primary btn-lg magnetic" type="button" data-connect-open>Connect Wallet</button>
-        <a class="btn btn-outline btn-lg" href="#contracts" data-spy-link>View on-chain proof</a>
-        <a class="btn btn-ghost btn-lg" href="https://github.com/Edootrx/quantaguard" target="_blank" rel="noopener">GitHub repository</a>
+        <a class="btn btn-primary btn-lg" href="#contracts" data-spy-link>View on-chain proof</a>
+        <a class="btn btn-outline btn-lg" href="#demos" data-spy-link>Try the live demos</a>
       </div>
       <p class="hero-note">Testnet only. QMS testnet tokens have no monetary value. Post-quantum accounts are not live on QMS v0.1 yet, and this page says so wherever it matters.</p>
     </div>
@@ -273,7 +276,7 @@
         <li>Explorer: https://testnet.qmsscan.io</li>
         <li>Non-custodial: keys never leave your wallet. This site never asks for a seed phrase, ever.</li>
       </ul>
-      <button class="btn btn-primary btn-lg magnetic" type="button" data-connect-open>Connect Wallet</button>
+      <p class="wallet-hint">Use the single <strong>Connect Wallet</strong> button in the top right corner of this page. Your address and live balance then appear in the panel here.</p>
     </div>
     <aside class="panel wallet-panel spotlight" aria-label="Wallet status">
       <div class="panel-head">
@@ -282,7 +285,7 @@
       </div>
       <div class="wallet-state" id="walletDisconnected">
         <p class="wallet-big">No wallet connected</p>
-        <p class="wallet-sub">Connect to view your QMS Testnet address and live balance here.</p>
+        <p class="wallet-sub">Connect with the button in the top right corner to view your QMS Testnet address and live balance here.</p>
       </div>
       <div class="wallet-state" id="walletConnected" hidden>
         <p class="wallet-label">Address</p>
@@ -529,7 +532,7 @@
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
       </a>
     </div>
-    <p class="footer-small">Built by andi_phy, solo builder, Indonesia. X: @andi_phy (1,139 followers) / Discord: 7capital / Email: mardotillah.088@gmail.com / Code: github.com/Edootrx/quantaguard</p>
+    <p class="footer-small">Built by andi_phy, solo builder, Indonesia. X: @andi_phy (1,139 followers) / Discord: 7capital / Email: mardotillah.088@gmail.com / Code: <a href="https://github.com/Edootrx/quantaguard" target="_blank" rel="noopener">github.com/Edootrx/quantaguard</a></p>
     <p class="footer-small dim">QuantaGuard runs on QMS Testnet only. Testnet tokens have no monetary value. Post-quantum accounts are not live on QMS v0.1; PQ finality arrives with v1 and the user-submitted QUBO marketplace with v2, as documented by QMS. No token sale, no yield promise, nothing on this page claims otherwise.</p>
   </div>
 </footer>
