@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QuantaGuard: PQ-Ready Smart Wallet for QMS</title>
+<meta name="description" content="PQ-ready ERC-4337 smart wallet for QMS: guardian recovery anchored to post-quantum keys, AI-agent session keys, and QUBO optimisation jobs. Live on QMS Testnet, chain 19480.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track" id="tickerTrack">
+    <span>QMS TESTNET</span><span class="dot">/</span>
+    <span>CHAIN ID 19480</span><span class="dot">/</span>
+    <span>REGISTRY CODE 1815 BYTES</span><span class="dot">/</span>
+    <span>FACTORY CODE 4784 BYTES</span><span class="dot">/</span>
+    <span>JOB BOARD CODE 3140 BYTES</span><span class="dot">/</span>
+    <span>JOB #1: 0.1 QMS LOCKED</span><span class="dot">/</span>
+    <span>ACCOUNT CREATED AT BLOCK 366911</span><span class="dot">/</span>
+    <span>GUARDIAN REGISTERED AT BLOCK 366913</span><span class="dot">/</span>
+    <span>JOB POSTED AT BLOCK 366915</span><span class="dot">/</span>
+    <span>FOUNDRY TESTS 10 / 10 PASSING</span><span class="dot">/</span>
+    <span>TESTNET ONLY: TOKENS HAVE NO MONETARY VALUE</span><span class="dot">/</span>
+  </div>
+</div>
+
+<header class="nav" id="topnav">
+  <div class="nav-inner">
+    <a class="brand" href="#overview" data-spy-link>
+      <svg class="brand-mark" width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2 L21 7 V12 C21 17.5 17 21 12 22 C7 21 3 17.5 3 12 V7 Z" stroke="currentColor" stroke-width="1.6"/><path d="M12 6.5 L17 9.3 V12 C17 15.4 14.8 17.6 12 18.4 C9.2 17.6 7 15.4 7 12 V9.3 Z" fill="currentColor" opacity="0.25"/><circle cx="12" cy="12" r="1.8" fill="currentColor"/></svg>
+      <span>QuantaGuard</span>
+      <span class="badge badge-outline">QMS Testnet</span>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#overview" data-spy-link data-spy="overview">Overview</a>
+      <a href="#contracts" data-spy-link data-spy="contracts">Contracts</a>
+      <a href="#product" data-spy-link data-spy="product">Product</a>
+      <a href="#wallet" data-spy-link data-spy="wallet">Wallet</a>
+      <a href="#demos" data-spy-link data-spy="demos">Live Demos</a>
+      <a href="#roadmap" data-spy-link data-spy="roadmap">Roadmap</a>
+      <a href="#plan" data-spy-link data-spy="plan">90-Day Plan</a>
+    </nav>
+    <div class="nav-actions">
+      <span class="wallet-chip" id="navWalletChip" hidden>
+        <span class="chip-dot"></span><span id="navWalletAddr">0x0000...0000</span>
+      </span>
+      <button class="btn btn-primary btn-sm magnetic" type="button" data-connect-open>Connect Wallet</button>
+      <button class="hamburger" id="hamburger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+      </button>
+    </div>
+  </div>
+  <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile">
+    <a href="#overview" data-spy-link>Overview<span>What QuantaGuard is</span></a>
+    <a href="#contracts" data-spy-link>Contracts<span>On-chain proof, verified live</span></a>
+    <a href="#product" data-spy-link>Product<span>The three layers</span></a>
+    <a href="#wallet" data-spy-link>Wallet<span>Connect to QMS Testnet</span></a>
+    <a href="#demos" data-spy-link>Live Demos<span>Try the mechanics in your browser</span></a>
+    <a href="#roadmap" data-spy-link>Roadmap<span>Honest staging: v0.1, v1, v2</span></a>
+    <a href="#plan" data-spy-link>90-Day Plan<span>What ships in the cohort</span></a>
+    <button class="btn btn-primary" type="button" data-connect-open>Connect Wallet</button>
+  </nav>
+</header>
+
+<main>
+
+<!-- ============ OVERVIEW / HERO ============ -->
+<section class="hero" id="overview">
+  <div class="hero-bg" aria-hidden="true">
+    <div class="aurora a1"></div>
+    <div class="aurora a2"></div>
+    <div class="beams"></div>
+  </div>
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <div class="hero-badges">
+        <span class="badge">QMS Builder Program, Cohort I</span>
+        <span class="badge badge-outline">Category: ERC-4337 infrastructure</span>
+        <span class="badge badge-outline">Stage: Testnet</span>
+      </div>
+      <h1 class="reveal-text" id="heroTitle">PQ-ready ERC-4337 smart wallet for QMS: guardian recovery anchored to <span class="shiny">post-quantum keys</span>, AI-agent session keys, and QUBO optimisation jobs.</h1>
+      <p class="hero-sub">QuantaGuard is a smart-account wallet for QMS users and their AI agents. It is not a slide deck: three contracts are deployed on QMS Testnet today, with live demo transactions anyone can verify on QMSScan.</p>
+      <div class="hero-actions">
+        <button class="btn btn-primary btn-lg magnetic" type="button" data-connect-open>Connect Wallet</button>
+        <a class="btn btn-outline btn-lg" href="#contracts" data-spy-link>View on-chain proof</a>
+        <a class="btn btn-ghost btn-lg" href="https://github.com/Edootrx/quantaguard" target="_blank" rel="noopener">GitHub repository</a>
+      </div>
+      <p class="hero-note">Testnet only. QMS testnet tokens have no monetary value. Post-quantum accounts are not live on QMS v0.1 yet, and this page says so wherever it matters.</p>
+    </div>
+
+    <aside class="panel deploy-panel spotlight" aria-label="Deployment proof">
+      <div class="panel-head">
+        <span class="panel-title">Deploy proof</span>
+        <span class="badge badge-live"><span class="pulse"></span>Live on chain 19480</span>
+      </div>
+      <div class="terminal">
+        <p><span class="t-dim">$</span> forge script Deploy --rpc-url rpc.testnet.qms.finance</p>
+        <p><span class="t-ok">OK</span> PQGuardianRegistry <a href="https://testnet.qmsscan.io/address/0x3F7548239BF586094E236357dFd41BFcB45a2480" target="_blank" rel="noopener">0x3F75...2480</a></p>
+        <p><span class="t-ok">OK</span> QuantaGuardFactory <a href="https://testnet.qmsscan.io/address/0x82AECF6465D12b5Fe56A4063ccBA0A6c1112d5e5" target="_blank" rel="noopener">0x82AE...d5e5</a></p>
+        <p><span class="t-ok">OK</span> QUBOJobBoard <a href="https://testnet.qmsscan.io/address/0xe6DbA5D0b3504Fc9c94CA4bB3d60Fe03c0F71C77" target="_blank" rel="noopener">0xe6Db...1C77</a></p>
+        <p><span class="t-dim">$</span> forge test</p>
+        <p><span class="t-ok">10 passed, 0 failed</span> <span class="t-dim">(factory, recovery, session keys, job settlement)</span></p>
+        <p><span class="t-dim">$</span> cast call jobBoard "balance"</p>
+        <p>Job #1 reward locked: <span class="t-accent">0.1 QMS</span></p>
+      </div>
+      <div class="panel-foot">
+        <span>Verified by eth_getCode via RPC</span>
+        <a href="https://testnet.qmsscan.io" target="_blank" rel="noopener">testnet.qmsscan.io</a>
+      </div>
+    </aside>
+  </div>
+
+  <div class="container">
+    <div class="stats-strip" id="statsStrip">
+      <div class="stat">
+        <span class="stat-num" data-count="3" data-decimals="0">0</span>
+        <span class="stat-label">Contracts deployed on QMS Testnet</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num"><span data-count="10" data-decimals="0">0</span><span class="stat-dim">/10</span></span>
+        <span class="stat-label">Foundry tests passing</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num"><span data-count="0.1" data-decimals="1">0.0</span><span class="stat-dim"> QMS</span></span>
+        <span class="stat-label">Locked in QUBO Job #1</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num" data-count="1" data-decimals="0">0</span>
+        <span class="stat-label">Active user in the last 30 days (prototype stage, honestly reported)</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTRACTS / ON-CHAIN PROOF ============ -->
+<section class="section" id="contracts">
+  <div class="container">
+    <p class="eyebrow">On-chain proof</p>
+    <h2>Deployed before applying. Verifiable by anyone.</h2>
+    <p class="section-intro">QuantaGuard was designed, built and deployed on QMS Testnet (chain 19480) before this application was submitted. Every address below was checked with eth_getCode over the public RPC, so the code sizes shown are measured, not claimed.</p>
+
+    <div class="table-wrap">
+      <table class="table">
+        <thead>
+          <tr><th>Contract</th><th>Address</th><th>Runtime code</th><th>Deploy tx</th><th></th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="td-strong">PQGuardianRegistry</td>
+            <td><span class="mono truncate">0x3F7548239BF586094E236357dFd41BFcB45a2480</span></td>
+            <td class="mono">1815 bytes</td>
+            <td><a class="mono" href="https://testnet.qmsscan.io/tx/0xac70a6e5336b00b429b0195145bd33c41818ce972d684e7312d92b4be11ddd28" target="_blank" rel="noopener">0xac70...ddd28</a></td>
+            <td class="td-actions">
+              <button class="btn btn-ghost btn-xs copy-btn" type="button" data-copy="0x3F7548239BF586094E236357dFd41BFcB45a2480">Copy</button>
+              <a class="btn btn-ghost btn-xs" href="https://testnet.qmsscan.io/address/0x3F7548239BF586094E236357dFd41BFcB45a2480" target="_blank" rel="noopener">Explorer</a>
+            </td>
+          </tr>
+          <tr>
+            <td class="td-strong">QuantaGuardFactory</td>
+            <td><span class="mono truncate">0x82AECF6465D12b5Fe56A4063ccBA0A6c1112d5e5</span></td>
+            <td class="mono">4784 bytes</td>
+            <td><a class="mono" href="https://testnet.qmsscan.io/tx/0x65c84fbbbeebb95fc017e8ec0f74e2e2fea5cc2403f74d11c6d6765a5dfed11e" target="_blank" rel="noopener">0x65c8...ed11e</a></td>
+            <td class="td-actions">
+              <button class="btn btn-ghost btn-xs copy-btn" type="button" data-copy="0x82AECF6465D12b5Fe56A4063ccBA0A6c1112d5e5">Copy</button>
+              <a class="btn btn-ghost btn-xs" href="https://testnet.qmsscan.io/address/0x82AECF6465D12b5Fe56A4063ccBA0A6c1112d5e5" target="_blank" rel="noopener">Explorer</a>
+            </td>
+          </tr>
+          <tr>
+            <td class="td-strong">QUBOJobBoard</td>
+            <td><span class="mono truncate">0xe6DbA5D0b3504Fc9c94CA4bB3d60Fe03c0F71C77</span></td>
+            <td class="mono">3140 bytes</td>
+            <td><a class="mono" href="https://testnet.qmsscan.io/tx/0xb2af487a95150bf97060737cefe5ce0f983f780f3d808326dba466e4f61aa34e" target="_blank" rel="noopener">0xb2af...aa34e</a></td>
+            <td class="td-actions">
+              <button class="btn btn-ghost btn-xs copy-btn" type="button" data-copy="0xe6DbA5D0b3504Fc9c94CA4bB3d60Fe03c0F71C77">Copy</button>
+              <a class="btn btn-ghost btn-xs" href="https://testnet.qmsscan.io/address/0xe6DbA5D0b3504Fc9c94CA4bB3d60Fe03c0F71C77" target="_blank" rel="noopener">Explorer</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="subhead">Live demo transactions</h3>
+    <div class="cards-3">
+      <article class="panel spotlight">
+        <div class="panel-head"><span class="panel-title">1. Create account</span><span class="badge badge-outline">Block 366911</span></div>
+        <p>The factory created a smart account at exactly the CREATE2 predicted address:</p>
+        <p class="mono break">0xf14E3681b156dB426c05bC0168d39E753Ee1eBDD</p>
+        <div class="card-actions">
+          <button class="btn btn-ghost btn-xs copy-btn" type="button" data-copy="0xf14E3681b156dB426c05bC0168d39E753Ee1eBDD">Copy account</button>
+          <a class="btn btn-ghost btn-xs" href="https://testnet.qmsscan.io/tx/0xb907eda9c270a045491307aedac5325d5889f7ba731b1c28ce944c1a2f00961b" target="_blank" rel="noopener">View tx</a>
+          <a class="btn btn-ghost btn-xs" href="https://testnet.qmsscan.io/address/0xf14E3681b156dB426c05bC0168d39E753Ee1eBDD" target="_blank" rel="noopener">View account</a>
+        </div>
+      </article>
+      <article class="panel spotlight">
+        <div class="panel-head"><span class="panel-title">2. Register PQ guardian</span><span class="badge badge-outline">Block 366913</span></div>
+        <p>The account registered a guardian whose identity is anchored to a post-quantum key commitment. The demo commitment is a clearly labelled placeholder hash, because PQ signatures are not live on QMS v0.1.</p>
+        <p class="mono break">Commitment: 0x3a4a8d1b8440e784f52a0aa64908483e8cc6bae4025f48871f805339dbc95193</p>
+        <div class="card-actions">
+          <button class="btn btn-ghost btn-xs copy-btn" type="button" data-copy="0x3a4a8d1b8440e784f52a0aa64908483e8cc6bae4025f48871f805339dbc95193">Copy commitment</button>
+          <a class="btn btn-ghost btn-xs" href="https://testnet.qmsscan.io/tx/0xadacd6025e0cae4fac47e16c198dcb61913479903116e8e9e41613b3039d1fbf" target="_blank" rel="noopener">View tx</a>
+        </div>
+      </article>
+      <article class="panel spotlight">
+        <div class="panel-head"><span class="panel-title">3. Post QUBO Job #1</span><span class="badge badge-outline">Block 366915</span></div>
+        <p>A portfolio optimisation job was posted with its reward locked on chain. Board balance after posting: exactly 0.1 QMS. Deadline 23 Nov 2026, 17:14 UTC.</p>
+        <p class="mono break">Problem hash: 0x8484cf0eaeacb90944700075542cade1dff63328c51a49401681340a85c82f5b</p>
+        <div class="card-actions">
+          <button class="btn btn-ghost btn-xs copy-btn" type="button" data-copy="0x8484cf0eaeacb90944700075542cade1dff63328c51a49401681340a85c82f5b">Copy problem hash</button>
+          <a class="btn btn-ghost btn-xs" href="https://testnet.qmsscan.io/tx/0x6f2b27fbd1f88a42c7dc7cefd239ea8c1a724621854b7240e5ec730a3389da5f" target="_blank" rel="noopener">View tx</a>
+        </div>
+      </article>
+    </div>
+
+    <div class="notice">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <p>The current QMS testnet resets around early December 2026. These addresses live on the pre-reset testnet and will be redeployed after the reset. Redeployment is a single Foundry script run and is scheduled in weeks 1 to 2 of the 90-day plan.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRODUCT ============ -->
+<section class="section section-alt" id="product">
+  <div class="container">
+    <p class="eyebrow">Product</p>
+    <h2>One account system, three layers.</h2>
+    <p class="section-intro">In plain words: QuantaGuard is a wallet you can recover if you lose your key, that can hand a limited spare key to an AI agent, and that connects to a job board where solvers get paid to solve optimisation problems, the useful work QMS is built around.</p>
+
+    <div class="cards-3">
+      <article class="panel layer spotlight">
+        <span class="layer-num">01</span>
+        <h3>PQ-anchored guardian recovery</h3>
+        <p>Smart accounts are created through a CREATE2 factory, so the address is predictable before deployment. Each account registers a guardian in the PQGuardianRegistry. The guardian identity is anchored to a hash commitment of an ML-DSA or SLH-DSA public key.</p>
+        <p>If the owner key is lost, the guardian proposes a new owner. The change executes only after a 48 hour timelock, and the owner can cancel at any time during the window. Today guardians act with ECDSA keys; the commitment is the anchor, and the verifier is a pluggable interface that a real ML-DSA verifier fills when QMS v1 ships PQ accounts.</p>
+        <span class="badge">Live on v0.1 (commitment anchored by hash)</span>
+      </article>
+      <article class="panel layer spotlight">
+        <span class="layer-num">02</span>
+        <h3>AI-agent session keys</h3>
+        <p>An autonomous agent should never hold the master key. QuantaGuard issues session keys with on-chain policy: an expiry time, a cumulative spend limit, and an optional single allowed target contract.</p>
+        <p>The account contract enforces the policy on every call. Over-limit spends revert, expired keys revert, calls to non-approved targets revert, and the owner can revoke a key at any time. Try the policy simulator in the Live Demos section below.</p>
+        <span class="badge">Live on v0.1</span>
+      </article>
+      <article class="panel layer spotlight">
+        <span class="layer-num">03</span>
+        <h3>QUBO job board</h3>
+        <p>QMS validators and solvers exist to solve QUBO optimisation problems. The job board is the demand side: a client locks a QMS reward, posts a problem hash, solvers submit a solution hash with an objective score, and the lowest score is paid on settlement.</p>
+        <p>Jobs can be cancelled with a full refund before any submission arrives, and settlement is reentrancy guarded. On v0.1 scores are claimed, not verified on chain; the verifier hook is isolated in the design and lands with the v2 useful-work marketplace integration.</p>
+        <span class="badge">Prototype live on v0.1</span>
+      </article>
+    </div>
+
+    <div class="panel sustain">
+      <h3>How it sustains itself</h3>
+      <p>A small fee (2%) on settled QUBO jobs, plus a Pro tier for advanced agent policies and scheduled optimisation. Solvers and miners earn the locked job reward; QuantaGuard earns only when useful work actually settles. No token planned. Revenue follows real Proof-of-Useful-Work demand.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WALLET ============ -->
+<section class="section" id="wallet">
+  <div class="container wallet-grid">
+    <div>
+      <p class="eyebrow">Wallet</p>
+      <h2>Connect to QMS Testnet and see it work.</h2>
+      <p class="section-intro">Connect any EIP-1193 wallet (MetaMask, Trust Wallet, and other injected providers, including mobile in-app browsers). The site will ask the wallet to switch to QMS Testnet, chain 19480, and adds the network automatically if it is missing. Your balance is read live from the chain.</p>
+      <ul class="check-list">
+        <li>Network: QMS Testnet, chain ID 19480 (0x4C18)</li>
+        <li>RPC: https://rpc.testnet.qms.finance</li>
+        <li>Explorer: https://testnet.qmsscan.io</li>
+        <li>Non-custodial: keys never leave your wallet. This site never asks for a seed phrase, ever.</li>
+      </ul>
+      <button class="btn btn-primary btn-lg magnetic" type="button" data-connect-open>Connect Wallet</button>
+    </div>
+    <aside class="panel wallet-panel spotlight" aria-label="Wallet status">
+      <div class="panel-head">
+        <span class="panel-title">Wallet status</span>
+        <span class="badge" id="walletNetBadge">Not connected</span>
+      </div>
+      <div class="wallet-state" id="walletDisconnected">
+        <p class="wallet-big">No wallet connected</p>
+        <p class="wallet-sub">Connect to view your QMS Testnet address and live balance here.</p>
+      </div>
+      <div class="wallet-state" id="walletConnected" hidden>
+        <p class="wallet-label">Address</p>
+        <p class="mono break" id="walletAddress">0x0000000000000000000000000000000000000000</p>
+        <p class="wallet-label">Balance on QMS Testnet</p>
+        <p class="wallet-big"><span id="walletBalance">0.0</span> <span class="stat-dim">QMS</span></p>
+        <p class="wallet-sub" id="walletChainLine">Chain: 19480</p>
+        <div class="card-actions">
+          <button class="btn btn-outline btn-sm" type="button" id="walletSwitchBtn" hidden>Switch to QMS Testnet</button>
+          <button class="btn btn-ghost btn-sm" type="button" id="walletRefreshBtn">Refresh balance</button>
+          <button class="btn btn-ghost btn-sm" type="button" id="walletDisconnectBtn">Disconnect</button>
+        </div>
+      </div>
+      <p class="wallet-error" id="walletError" role="alert" hidden></p>
+    </aside>
+  </div>
+</section>
+
+<!-- ============ LIVE DEMOS ============ -->
+<section class="section section-alt" id="demos">
+  <div class="container">
+    <p class="eyebrow">Live demos</p>
+    <h2>The mechanics, running in your browser.</h2>
+    <p class="section-intro">These demos mirror the on-chain logic of the deployed contracts. They run locally with synthetic data only, so nothing you type here is sent anywhere or written to the chain.</p>
+
+    <div class="demo-grid">
+
+      <article class="panel demo spotlight" id="demoGuardian">
+        <div class="panel-head"><span class="panel-title">Demo 1: Guardian commitment and recovery</span><span class="badge badge-outline">SHA-256 in browser</span></div>
+        <ol class="steps">
+          <li>Type any guardian identifier (for example a guardian name or a demo public key string).</li>
+          <li>Compute its commitment hash, the same anchoring idea the registry stores on chain.</li>
+          <li>Register the commitment, then simulate a recovery approved by that guardian.</li>
+        </ol>
+        <label class="field-label" for="guardianInput">Guardian identifier</label>
+        <input class="input" id="guardianInput" type="text" autocomplete="off" placeholder="e.g. guardian-alice-demo-key" value="guardian-alice-demo-key">
+        <div class="card-actions">
+          <button class="btn btn-primary btn-sm" type="button" id="guardianHashBtn">1. Compute commitment</button>
+          <button class="btn btn-outline btn-sm" type="button" id="guardianRegisterBtn" disabled>2. Register commitment</button>
+          <button class="btn btn-outline btn-sm" type="button" id="guardianRecoverBtn" disabled>3. Simulate recovery</button>
+        </div>
+        <div class="demo-out" id="guardianOut" aria-live="polite">
+          <p class="t-dim">Commitment hash will appear here.</p>
+        </div>
+      </article>
+
+      <article class="panel demo spotlight" id="demoSession">
+        <div class="panel-head"><span class="panel-title">Demo 2: Session key policy simulator</span><span class="badge badge-outline">Policy enforced like on chain</span></div>
+        <div class="form-grid">
+          <div>
+            <label class="field-label" for="skLimit">Spend limit (QMS, cumulative)</label>
+            <input class="input" id="skLimit" type="number" min="0" step="0.1" value="1.0">
+          </div>
+          <div>
+            <label class="field-label" for="skExpiry">Key expires in (hours)</label>
+            <input class="input" id="skExpiry" type="number" min="0" step="1" value="24">
+          </div>
+          <div>
+            <label class="field-label" for="skTarget">Allowed target</label>
+            <select class="input" id="skTarget">
+              <option value="board" selected>QUBOJobBoard only</option>
+              <option value="factory">QuantaGuardFactory only</option>
+              <option value="any">Any target</option>
+            </select>
+          </div>
+          <div>
+            <label class="field-label" for="skElapsed">Simulated time from now (hours)</label>
+            <input class="input" id="skElapsed" type="number" min="0" step="1" value="1">
+          </div>
+          <div>
+            <label class="field-label" for="skAmount">Test action amount (QMS)</label>
+            <input class="input" id="skAmount" type="number" min="0" step="0.1" value="0.4">
+          </div>
+          <div>
+            <label class="field-label" for="skActionTarget">Test action target</label>
+            <select class="input" id="skActionTarget">
+              <option value="board" selected>QUBOJobBoard</option>
+              <option value="factory">QuantaGuardFactory</option>
+              <option value="other">Some other contract</option>
+            </select>
+          </div>
+        </div>
+        <div class="card-actions">
+          <button class="btn btn-primary btn-sm" type="button" id="skTestBtn">Test action against policy</button>
+          <button class="btn btn-ghost btn-sm" type="button" id="skResetBtn">Reset spent total</button>
+        </div>
+        <div class="demo-out" id="sessionOut" aria-live="polite">
+          <p class="t-dim">Spent so far under this key: 0 QMS. Test an action to see the verdict.</p>
+        </div>
+      </article>
+
+      <article class="panel demo demo-wide spotlight" id="demoQubo">
+        <div class="panel-head"><span class="panel-title">Demo 3: QUBO solver, portfolio optimisation</span><span class="badge badge-outline">Brute force, synthetic data</span></div>
+        <p>This is the same worked example as on-chain Job #1. Pick exactly 2 of 4 synthetic assets (BTC, ETH, QMS, USDC) to minimise the objective energy f(x) = xT Q x. The solver checks all 16 combinations in your browser and returns the best one, the same lowest-score logic the job board pays on.</p>
+        <div class="qubo-flex">
+          <div>
+            <p class="field-label">QUBO matrix Q</p>
+            <div class="table-wrap">
+              <table class="table table-sm" id="quboMatrix">
+                <thead><tr><th></th><th>BTC</th><th>ETH</th><th>QMS</th><th>USDC</th></tr></thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="qubo-side">
+            <button class="btn btn-primary btn-sm" type="button" id="quboRunBtn">Solve by brute force</button>
+            <div class="demo-out" id="quboOut" aria-live="polite">
+              <p class="t-dim">Results for all valid selections (exactly 2 assets) will appear here.</p>
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ ROADMAP / STAGING ============ -->
+<section class="section" id="roadmap">
+  <div class="container">
+    <p class="eyebrow">Roadmap</p>
+    <h2>Honest staging: what is live, what is not.</h2>
+    <p class="section-intro">QMS publishes its own staging, and this application follows it exactly. Nothing below claims a QMS feature is live before QMS ships it.</p>
+
+    <div class="table-wrap">
+      <table class="table">
+        <thead><tr><th>Capability</th><th>v0.1, live today</th><th>v1</th><th>v2</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="td-strong">EVM smart contracts (Solidity, Foundry)</td>
+            <td><span class="badge badge-yes">Live</span></td>
+            <td class="td-dim">Continues</td>
+            <td class="td-dim">Continues</td>
+          </tr>
+          <tr>
+            <td class="td-strong">Smart accounts via CREATE2 factory</td>
+            <td><span class="badge badge-yes">Live (QuantaGuard)</span></td>
+            <td class="td-dim">PQ-native accounts arrive</td>
+            <td class="td-dim">Continues</td>
+          </tr>
+          <tr>
+            <td class="td-strong">Guardian recovery anchored to PQ key commitment</td>
+            <td><span class="badge badge-yes">Live (hash commitment, ECDSA guardian)</span></td>
+            <td class="td-dim">ML-DSA verifier plugs into the same interface</td>
+            <td class="td-dim">Continues</td>
+          </tr>
+          <tr>
+            <td class="td-strong">Post-quantum accounts and PQ signatures</td>
+            <td><span class="badge badge-no">Not live yet</span></td>
+            <td><span class="badge">Ships with QMS v1</span></td>
+            <td class="td-dim">Continues</td>
+          </tr>
+          <tr>
+            <td class="td-strong">Post-quantum finality layer</td>
+            <td><span class="badge badge-no">Not live (confirmations used instead)</span></td>
+            <td><span class="badge">Ships with QMS v1</span></td>
+            <td class="td-dim">Continues</td>
+          </tr>
+          <tr>
+            <td class="td-strong">AI-agent session keys with on-chain policy</td>
+            <td><span class="badge badge-yes">Live (QuantaGuard)</span></td>
+            <td class="td-dim">Extended policies</td>
+            <td class="td-dim">Continues</td>
+          </tr>
+          <tr>
+            <td class="td-strong">QUBO job board</td>
+            <td><span class="badge badge-yes">Prototype live (scores claimed)</span></td>
+            <td class="td-dim">Dispute window, solver templates</td>
+            <td class="td-dim">Native client of the useful-work marketplace</td>
+          </tr>
+          <tr>
+            <td class="td-strong">User-submitted QUBO marketplace (client useful work)</td>
+            <td><span class="badge badge-no">Not live yet</span></td>
+            <td class="td-dim">In development by QMS</td>
+            <td><span class="badge">Ships with QMS v2</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 90-DAY PLAN ============ -->
+<section class="section section-alt" id="plan">
+  <div class="container">
+    <p class="eyebrow">90-day plan</p>
+    <h2>What the cohort period delivers.</h2>
+    <p class="section-intro">Ninety days, three phases. The plan assumes the December testnet reset and the published QMS staging, nothing more.</p>
+
+    <div class="timeline" id="timeline">
+      <div class="beam" aria-hidden="true"><div class="beam-fill" id="beamFill"></div></div>
+
+      <article class="tl-item">
+        <span class="tl-dot"></span>
+        <div class="panel spotlight">
+          <div class="panel-head"><span class="panel-title">Weeks 1 to 2: Redeploy on the reset testnet</span><span class="badge badge-outline">Days 0 to 14</span></div>
+          <p>Redeploy all three contracts on the post-reset QMS testnet with the existing Foundry script, re-verify code on QMSScan, and re-run the full demo flow (account creation, guardian registration, Job #1 equivalent).</p>
+        </div>
+      </article>
+
+      <article class="tl-item">
+        <span class="tl-dot"></span>
+        <div class="panel spotlight">
+          <div class="panel-head"><span class="panel-title">Weeks 3 to 6: ERC-4337 hardening</span><span class="badge badge-outline">Days 15 to 42</span></div>
+          <p>EntryPoint v0.7 adapter (validateUserOp) and paymaster integration on QMS testnet, multi-guardian 2-of-n recovery, and session-key policies extended with per-target value caps and method allowlists. Design review of the bundler and paymaster approach with QMS engineers is the support ask that matters most here.</p>
+        </div>
+      </article>
+
+      <article class="tl-item">
+        <span class="tl-dot"></span>
+        <div class="panel spotlight">
+          <div class="panel-head"><span class="panel-title">Weeks 5 to 8: Real solvers, real verification</span><span class="badge badge-outline">Days 31 to 60</span></div>
+          <p>Reference QUBO solver (simulated annealing) plus an off-chain objective recomputation service, a dispute window on the job board so a claimed score can be challenged before settlement, and portfolio and logistics problem templates.</p>
+        </div>
+      </article>
+
+      <article class="tl-item">
+        <span class="tl-dot"></span>
+        <div class="panel spotlight">
+          <div class="panel-head"><span class="panel-title">Weeks 7 to 12: Closed beta and v1 readiness</span><span class="badge badge-outline">Days 43 to 90</span></div>
+          <p>Closed beta with 25 QMS testnet users. PQ verifier integration as soon as the v1 PQ account specs land (test vectors first, no mainnet claims before the chain supports them). Security review of the account and the board. Public demo: an AI agent with a session key autonomously bidding on and solving QUBO jobs within its on-chain budget, ready to become a native client when the v2 marketplace opens.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="container">
+    <div class="social-row" role="navigation" aria-label="Social links">
+      <a class="social-btn" href="https://x.com/andi_phy" target="_blank" rel="noopener" aria-label="X profile of andi_phy" title="X: @andi_phy">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      </a>
+      <a class="social-btn" href="https://github.com/Edootrx/quantaguard" target="_blank" rel="noopener" aria-label="GitHub repository" title="GitHub: Edootrx/quantaguard">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55 0-.27-.01-1.17-.02-2.12-3.2.7-3.88-1.36-3.88-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.76 2.69 1.25 3.35.96.1-.75.4-1.25.72-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11.1 11.1 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.42-2.7 5.39-5.26 1.28 1.06.31.84.31 1.9 0 1.37-.01 2.48-.01 2.82 0 .3.2.67.8.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+      </a>
+      <button class="social-btn" type="button" id="discordCopyBtn" aria-label="Copy Discord handle 7capital" title="Discord: 7capital (tap to copy)">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.32 4.37a19.8 19.8 0 0 0-4.93-1.51 13.78 13.78 0 0 0-.64 1.28 18.27 18.27 0 0 0-5.5 0 12.64 12.64 0 0 0-.64-1.28h-.05A19.74 19.74 0 0 0 3.64 4.37C.54 9.04-.32 13.58.1 18.06a19.9 19.9 0 0 0 6.04 3.03c.24-.33.47-.67.66-1.03a12.9 12.9 0 0 1-1.04-.5c.09-.07.17-.14.25-.21a14.2 14.2 0 0 0 12.02 0c.08.07.16.14.25.21-.33.2-.68.36-1.04.5.19.36.42.7.66 1.03a19.84 19.84 0 0 0 6.03-3.03c.5-5.18-.84-9.68-3.53-13.66ZM8.02 15.33c-1.18 0-2.16-1.08-2.16-2.42s.95-2.42 2.16-2.42 2.18 1.09 2.16 2.42c0 1.34-.95 2.42-2.16 2.42Zm7.97 0c-1.18 0-2.15-1.08-2.15-2.42s.95-2.42 2.15-2.42 2.18 1.09 2.16 2.42c0 1.34-.94 2.42-2.16 2.42Z"/></svg>
+      </button>
+      <a class="social-btn" href="mailto:mardotillah.088@gmail.com" aria-label="Email the builder" title="Email: mardotillah.088@gmail.com">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+      </a>
+    </div>
+    <p class="footer-small">Built by andi_phy, solo builder, Indonesia. X: @andi_phy (1,139 followers) / Discord: 7capital / Email: mardotillah.088@gmail.com / Code: github.com/Edootrx/quantaguard</p>
+    <p class="footer-small dim">QuantaGuard runs on QMS Testnet only. Testnet tokens have no monetary value. Post-quantum accounts are not live on QMS v0.1; PQ finality arrives with v1 and the user-submitted QUBO marketplace with v2, as documented by QMS. No token sale, no yield promise, nothing on this page claims otherwise.</p>
+  </div>
+</footer>
+
+<!-- ============ WALLET MODAL ============ -->
+<div class="modal-backdrop" id="walletModal" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="walletModalTitle">
+    <div class="modal-head">
+      <h3 id="walletModalTitle">Connect Wallet</h3>
+      <button class="modal-close" type="button" id="walletModalClose" aria-label="Close">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+      </button>
+    </div>
+    <p class="modal-sub">Connect to QMS Testnet (chain 19480). The wallet stays in full control of your keys at all times.</p>
+    <div class="modal-options">
+      <button class="wallet-option" type="button" id="optInjected">
+        <span class="wallet-option-main">
+          <span class="wallet-option-name">Browser wallet</span>
+          <span class="wallet-option-desc" id="optInjectedDesc">MetaMask, Trust Wallet, or any injected EIP-1193 provider, including mobile in-app browsers.</span>
+        </span>
+        <span class="badge" id="optInjectedBadge">Detecting</span>
+      </button>
+      <button class="wallet-option" type="button" id="optWalletConnect">
+        <span class="wallet-option-main">
+          <span class="wallet-option-name">WalletConnect</span>
+          <span class="wallet-option-desc">Scan a QR code with a WalletConnect v2 compatible wallet.</span>
+        </span>
+        <span class="badge badge-outline" id="optWalletConnectBadge">Setup required</span>
+      </button>
+    </div>
+    <p class="modal-status" id="walletModalStatus" aria-live="polite"></p>
+    <div class="modal-note">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 2 L21 7 V12 C21 17.5 17 21 12 22 C7 21 3 17.5 3 12 V7 Z"/></svg>
+      <p>This site never asks for a seed phrase or a private key. If anything ever does, close it. It is not us.</p>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script src="assets/app.js"></script>
+</body>
+</html>
