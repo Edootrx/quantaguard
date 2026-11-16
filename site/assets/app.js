@@ -393,7 +393,7 @@ document.querySelectorAll(".copy-btn").forEach(function (btn) {
     });
     out.innerHTML =
       "<p>Checked all 16 combinations, 6 satisfy the pick-exactly-2 constraint.</p>" +
-      "<p><span class='verdict ok'>BEST: " + bestNames + "</span> with energy <span class='mono'>" + best.energy.toFixed(4) + "</span>. A solver submitting this solution for Job #1 posts the lowest objective score and is paid the locked 0.1 QMS on settlement.</p>" +
+      "<p><span class='verdict ok'>BEST: " + bestNames + "</span> with energy <span class='mono'>" + best.energy.toFixed(4) + "</span>. A solver submitting this solution for the first job posts the lowest objective score and is paid the locked 0.1 QMS on settlement.</p>" +
       "<div class='table-wrap qubo-results'><table class='table table-sm'><thead><tr><th>Selection</th><th>Energy f(x)</th></tr></thead><tbody>" + rows + "</tbody></table></div>";
   });
 })();

@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css?v=20261117b">
+<link rel="stylesheet" href="assets/style.css?v=20261117c">
 </head>
 <body>
 
@@ -20,7 +20,7 @@
     <span>REGISTRY CODE 1815 BYTES</span><span class="dot">/</span>
     <span>FACTORY CODE 4784 BYTES</span><span class="dot">/</span>
     <span>JOB BOARD CODE 3140 BYTES</span><span class="dot">/</span>
-    <span>JOB #1: 0.1 QMS LOCKED</span><span class="dot">/</span>
+    <span>FIRST JOB POSTED: 0.1 QMS LOCKED</span><span class="dot">/</span>
     <span>ACCOUNT CREATED AT BLOCK 366911</span><span class="dot">/</span>
     <span>GUARDIAN REGISTERED AT BLOCK 366913</span><span class="dot">/</span>
     <span>JOB POSTED AT BLOCK 366915</span><span class="dot">/</span>
@@ -108,7 +108,7 @@
         <p><span class="t-dim">$</span> forge test</p>
         <p><span class="t-ok">10 passed, 0 failed</span> <span class="t-dim">(factory, recovery, session keys, job settlement)</span></p>
         <p><span class="t-dim">$</span> cast call jobBoard "balance"</p>
-        <p>Job #1 reward locked: <span class="t-accent">0.1 QMS</span></p>
+        <p>First job reward locked: <span class="t-accent">0.1 QMS</span></p>
       </div>
       <div class="panel-foot">
         <span>Verified by eth_getCode via RPC</span>
@@ -129,7 +129,7 @@
       </div>
       <div class="stat">
         <span class="stat-num"><span data-count="0.1" data-decimals="1">0.0</span><span class="stat-dim"> QMS</span></span>
-        <span class="stat-label">Locked in QUBO Job #1</span>
+        <span class="stat-label">Locked in the first QUBO job</span>
       </div>
       <div class="stat">
         <span class="stat-num" data-count="1" data-decimals="0">0</span>
@@ -208,7 +208,7 @@
         </div>
       </article>
       <article class="panel spotlight">
-        <div class="panel-head"><span class="panel-title">3. Post QUBO Job #1</span><span class="badge badge-outline">Block 366915</span></div>
+        <div class="panel-head"><span class="panel-title">3. Post the first QUBO job</span><span class="badge badge-outline">Block 366915</span></div>
         <p>A portfolio optimisation job was posted with its reward locked on chain. Board balance after posting: exactly 0.1 QMS. Deadline 23 Nov 2026, 17:14 UTC.</p>
         <p class="mono break">Problem hash: 0x8484cf0eaeacb90944700075542cade1dff63328c51a49401681340a85c82f5b</p>
         <div class="card-actions">
@@ -379,7 +379,7 @@
 
       <article class="panel demo demo-wide spotlight" id="demoQubo">
         <div class="panel-head"><span class="panel-title">Demo 3: QUBO solver, portfolio optimisation</span><span class="badge badge-outline">Brute force, synthetic data</span></div>
-        <p>This is the same worked example as on-chain Job #1. Pick exactly 2 of 4 synthetic assets (BTC, ETH, QMS, USDC) to minimise the objective energy f(x) = xT Q x. The solver checks all 16 combinations in your browser and returns the best one, the same lowest-score logic the job board pays on.</p>
+        <p>This is the same worked example as the first job posted on chain. Pick exactly 2 of 4 synthetic assets (BTC, ETH, QMS, USDC) to minimise the objective energy f(x) = xT Q x. The solver checks all 16 combinations in your browser and returns the best one, the same lowest-score logic the job board pays on.</p>
         <div class="qubo-flex">
           <div>
             <p class="field-label">QUBO matrix Q</p>
@@ -482,7 +482,7 @@
         <span class="tl-dot"></span>
         <div class="panel spotlight">
           <div class="panel-head"><span class="panel-title">Weeks 1 to 2: Redeploy on the reset testnet</span><span class="badge badge-outline">Days 0 to 14</span></div>
-          <p>Redeploy all three contracts on the post-reset QMS testnet with the existing Foundry script, re-verify code on QMSScan, and re-run the full demo flow (account creation, guardian registration, Job #1 equivalent).</p>
+          <p>Redeploy all three contracts on the post-reset QMS testnet with the existing Foundry script, re-verify code on QMSScan, and re-run the full demo flow (account creation, guardian registration, an equivalent first job).</p>
         </div>
       </article>
 
@@ -573,6 +573,6 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
-<script src="assets/app.js?v=20261117b"></script>
+<script src="assets/app.js?v=20261117c"></script>
 </body>
 </html>
